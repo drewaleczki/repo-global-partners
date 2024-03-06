@@ -36,7 +36,7 @@ Improve SellOut data processing for LATAM countries and later for others, ensuri
 
 The entire project was carried out using pre-existing data processing structures, we organized new folders as the source of the files and created a new Python script that queries some Big Query tables and overwrites the processed data in a table from project ssbx-hidden-information' and a migration to the 'ssbx-hidden-information2' project is planned. Below is the initial project diagram:
 
-<img src="/repo-global-partners/pj-arquitecture-global-partners.png">
+<img src="pj-arquitecture-global-partners.png">
 
 # ☑️ Requirements
 
@@ -50,7 +50,7 @@ Run only after allocating the files correctly in the folders and processing step
 ## Automation Flow - Sell Out:
 To run the following script, the files for the month in which you will update the data must be in the destination folder for each country as in the example below:
 
-<img src="/repo-global-partners/automation-flow-sellout.png">
+<img src="automation-flow-sellout.png">
 
 * The file name **does not matter** as long as it is in the correct destination (the same applies for all countries)
 
@@ -58,29 +58,29 @@ The *DataProcessing_LATAM.py* and *DataProcessing_EXPORTS.py* scripts read the f
 
 * **general_results_LATAM**
 
-<img src="/repo-global-partners/general-results-latam-sellout.png">
+<img src="general-results-latam-sellout.png">
 
 * **general_results_EXPORTS**
 
-<img src="/repo-global-partners/general-results-exports-sellout.png">
+<img src="general-results-exports-sellout.png">
 
 and after that, run the Dataprep Global Partners import service to export data from the Google Sheets file directly to the BigQuery table `ssbx-hidden-information.sell_out.db_globalpartners`. 
 
 * **Dataprep** Global Partners: Dataprep is configured to convert the Excel column type to the acceptable BigQuery format and import it into the reference or creation table if it does not exist.
 
-<img src="/repo-global-partners/dataprep-globalpartners.png">
+<img src="dataprep-globalpartners.png">
 
 *You need to right click on dataset and click on refresh to update the file in dataprep*
 
-<img src="/repo-global-partners/dataprep-globalpartners2.png">
+<img src="dataprep-globalpartners2.png">
 
-<img src="/repo-global-partners/dataprep-globalpartners3.png">
+<img src="dataprep-globalpartners3.png">
 
-Click <img src="/repo-global-partners/run.png"> to import data to BigQuery.
+Click <img src="run.png"> to import data to BigQuery.
 
 * **BigQuery** Table: Here we maintain the history and the base consumed by the views to bring the updated data to the Dashboard.
 
-<img src="/repo-global-partners/bq-globalpartners.png">
+<img src="bq-globalpartners.png">
 
 With the updated BigQuery table, the SQL views related to the table are automatically updated with newer data, and this in turn is reflected in the **General Results Dashboard - Global Partners**
 
@@ -91,11 +91,11 @@ After updating the current month's data, run the process in **Dataprep Missing C
 
 * **Missing Comparative - Global Partners**
 
-<img src="/repo-global-partners/dataprep-missing.png">
+<img src="dataprep-missing.png">
 
-<img src="/repo-global-partners/dataprep-missing2.png">
+<img src="dataprep-missing2.png">
 
-Click <img src="/repo-global-partners/run.png"> to import data to BigQuery.
+Click <img src="run.png"> to import data to BigQuery.
 
 ## Automation Flow - Direct Sales:
 
@@ -103,25 +103,25 @@ With the Sell Out automation process updated, we can run the script *DataProcess
 
 * **general_results_VD**
 
-<img src="/repo-global-partners/general-results-vd.png">
+<img src="general-results-vd.png">
 
 and after that, run the Dataprep VD import service to export data from the Google Sheets file directly to the BigQuery table `ssbx-hidden-information.sell_out.db_vd`. 
 
 * **Dataprep VD**: Dataprep is configured to convert the Excel column type to the acceptable BigQuery format and import it into the reference or creation table if it does not exist.
 
-<img src="/repo-global-partners/dataprep-vd.png">
+<img src="dataprep-vd.png">
 
 *You need to right click on dataset and click on refresh to update the file in dataprep
 
-<img src="/repo-global-partners/dataprep-vd2.png">
+<img src="dataprep-vd2.png">
 
-<img src="/repo-global-partners/dataprep-vd3.png">
+<img src="dataprep-vd3.png">
 
-Click <img src="/repo-global-partners/run.png"> to import data to BigQuery.
+Click <img src="run.png"> to import data to BigQuery.
 
 * **BigQuery Table VD**: Here we maintain the history and the base consumed by the views to bring the updated data to the Dashboard.
 
-<img src="/repo-global-partners/bq-vd.png">
+<img src="bq-vd.png">
 
 With the updated BigQuery table, the SQL views related to the table are automatically updated with newer data, and this in turn is reflected in the **General Results Dashboard - Global Partners**
 
@@ -197,7 +197,7 @@ Table that stores the processed Direct Sales data on a monthly basis, the script
 
 Table replicated from a Google Sheets file, which contains Budget data by country and channel for Sell Out. As it is an integrated file, any layout change in the Google Sheets file may result in errors in the table, only updating is recommended incremental goals and in case of layout changes, reimporting the table is recommended.
 
-<img src="/repo-global-partners/db-vd-budget.png">
+<img src="db-vd-budget.png">
 
 ### db_vd_base_inicial
 
@@ -205,13 +205,13 @@ Table replicated from a Google Sheets file, which contains initial baseline data
 
 * The file is integrated with a connection via Query in the db_vd table to obtain the number of assets, starts and restarts and calculate the initial base in the file itself. In yellow are the columns that are imported into BigQuery.
 
-<img src="/repo-global-partners/db-base-inicial.png">
+<img src="db-base-inicial.png">
 
 ### db_vd_budget
 
 Table replicated from a Google Sheets file, which contains Budget data by country for VD. As it is an integrated file, any layout change in the Google Sheets file may result in errors in the table, only updating is recommended incremental goals and in case of layout changes, reimporting the table is recommended.
 
-<img src="/repo-global-partners/db-vd-budget2.png">
+<img src="db-vd-budget2.png">
 
 ## Query
 
@@ -219,7 +219,7 @@ Table replicated from a Google Sheets file, which contains Budget data by countr
 
 To obtain the initial base data and calculate the monthly accumulations by country, we use a Google Sheets file called db_base_initial, which runs the query below in dw_vd_partners to obtain the count of starts, restarts, stops and calculates the net addition.
 
-<img src="/repo-global-partners/db-query-base-inicial.png">
+<img src="db-query-base-inicial.png">
 
 ```sql
 select 
